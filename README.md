@@ -1,4 +1,5 @@
 # Castle of Riddles Escape Room
+![image](https://github.com/user-attachments/assets/c5df7531-1616-4861-94fb-5a06228a86d8)
 
 **Castle of Riddles Escape Room** is a text-based adventure where you solve riddles to escape from a castle. Explore different rooms, find clues, and avoid traps to win the game!
 
