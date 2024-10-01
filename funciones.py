@@ -17,6 +17,40 @@ def linebreak():
     """
     print("\n\n")
 
+class CustomValueError(ValueError):
+    def __init__(self, message="NO! We've said a number!"):
+        self.message = message
+        super().__init__(self.message)
+
+# Function to manage personalized errors messages to the final input, must be a number between 1 and 20
+def finalInputErrors(prompt, min_value, max_value):
+    attempts = 0
+    max_attempts = 3
+
+    while attempts < max_attempts:
+        try:
+            final_input = int(input(prompt))
+            # Check if the number is out of range
+            if final_input < min_value or final_input > max_value:
+                print(f"The number {final_input} is out of range ({min_value}-{max_value}).")
+            elif final_input == 14:
+                print(f"Correct. The answer is: {final_input}")
+                next_room = outside  # Update the next room
+                play_room(next_room)  # Play the next room
+                return final_input
+            else:
+                print("Incorrect answer, try again.")  # English message for incorrect answer
+        except ValueError:
+            print(CustomValueError())  # Custom error message
+            print("Good try! You're one step closer to the final answer.")  # Additional message
+        finally:
+            attempts += 1
+            if attempts >= max_attempts:
+                print("Maximum number of attempts reached. Exiting the program.")
+                sys.exit()
+
+    return None
+
 #The inital situation is presented to the player
 
 def start_game():
@@ -78,39 +112,6 @@ def get_next_room_of_door(door, current_room):
     for room in connected_rooms:
         if room != current_room:
             return room
-
-# Personalized error message
-class CustomValueError(ValueError):
-    def __init__(self, message="NO! We've said a number!"):
-        self.message = message
-        super().__init__(self.message)
-
-# Function to manage personalized errors messages to the final input, must be a number between 1 and 20
-def finalInputErrors(prompt, min_value, max_value):
-    attempts = 0
-    max_attempts = 3
-
-    while attempts < max_attempts:
-        try:
-            final_input = int(input(prompt))
-        except ValueError:
-            print(CustomValueError())
-            print("Good try! you're one step closer to the final answer.")
-        else:
-            if final_input == 14:
-                print(f"Correct. The answer is : {final_input}")
-                next_room = outside  # Update the next room
-                play_room(next_room)  # Play the next room
-                return final_input
-            else:
-                print("Incorrect answer, try again.")
-        finally:
-            attempts += 1
-            if attempts >= max_attempts:
-                print("Maximum number of attempts reached. Exiting the program.")
-                sys.exit()
-    return None
-
 
 def examine_item(item_name):
     """
