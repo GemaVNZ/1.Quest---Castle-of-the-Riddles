@@ -370,6 +370,7 @@ def examine_item(item_name):
                     item_found = "library_riddleC"
                     game_state["solved_riddles"].append(item_found)
                     print("The yellow door makes a noise")
+                    print("Would you like to examine the yellow door?")
                     if input("Enter 'yes' or 'no'").strip().lower() == "yes":
                         next_room = kitchen
                         play_room(next_room)
