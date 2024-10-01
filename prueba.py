@@ -323,14 +323,15 @@ def examine_item(item_name):
             output = "You examine " + item_name + ". "
             if item["type"] == "clueTower":
                 print(item["text"])
-                answer = input("What is your answer?").lower().strip()
-                if answer == item["answer"]:
-                    game_state["solved_riddles"].append(item_name)
-                    output = "The door is unlocked "
-                    next_room = library  # Update the next room
-                    play_room(next_room)  # Play the next room
-                else:
-                    print("Incorrect answer")
+                while True:
+                    answer = input("What is your answer?").lower().strip()
+                    if answer == item["answer"]:
+                        game_state["solved_riddles"].append(item_name)
+                        output = "Good job, that's the answer. Now the door is unlocked. "
+                        next_room = library  # Update the next room
+                        break
+                    else:
+                        print("Incorrect answer. Please try again.")
             elif item["type"] == "clueliving_room":
                 print(item["text"])
                 answer = finalInputErrors(
