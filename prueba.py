@@ -1,5 +1,186 @@
 import sys
 
+# Define objects in the tower
+tower = {
+    "name": "tower",
+    "type": "room",
+}
+
+bed = {
+    "name": "bed", #Name of the item
+    "type": "object", #Type of the item (object, door or clue)
+}
+
+tower_door = {
+    "name": "tower door",
+    "type": "door",
+}
+
+tower_window = {
+    "name": "window",
+    "type": "clueTower",
+    "target": "tower_door",
+    "text": (
+        "I'm round and yellow, bright as can be,\n"
+        "I shine in the sky for all to see.\n"
+        "I warm the earth and help plants grow.\n"
+        "What am I?\n"
+    ),
+    "answer": "sun",
+}
+
+tower_riddle = {
+    "name": "tower riddle",
+    "type": "key",
+    "target": "tower door",
+}
+
+# Define objects in the library
+library = {
+    "name": "library",
+    "type": "room",
+}
+
+kitchen_door = {
+    "name": "yellow door",
+    "type": "door",
+}
+
+dungeon_door = {
+    "name": "red door",
+    "type": "door",
+}
+
+living_room_door = {
+    "name": "blue door",
+    "type": "door",
+}
+
+library_clue = {
+    "name": "note",
+    "type": "library_clue",
+    "targets": {
+        "kitchen_door": kitchen_door,
+        "dungeon_door": dungeon_door,
+        "living_room_door": living_room_door,
+    },
+    "text": (
+        "Not all heroes are great warriors or powerful wizards. Some are chosen by fate, "
+        "without even knowing that the world depends on them. Find those who, without being "
+        "great, achieved the impossible.\n"
+        "The options are:\n"
+        "1. Alice in Wonderland\n"
+        "2. The Lord of the Rings\n"
+        "3. Harry Potter"
+    ),
+    "answerA": "Alice in Wonderland",
+    "answerB": "The Lord of the Rings",
+    "answerC": "Harry Potter",
+}
+
+library_riddleA = {
+    "name": "library riddleA",
+    "type": "key",
+    "target": living_room_door,
+}
+library_riddleB = {
+    "name": "library riddleB",
+    "type": "key",
+    "target": dungeon_door,
+}
+library_riddleC = {
+    "name": "library riddleC",
+    "type": "key",
+    "target": kitchen_door,
+}
+
+# Define objects in the kitchen
+kitchen = {
+    "name": "kitchen",
+    "type": "room",
+}
+
+dungeon = {
+    "name": "dungeon",
+    "type": "room",
+}
+
+cake = {
+    "name": "cake",
+    "type": "trap",
+}
+
+plate_of_fruit = {
+    "name": "fruit",
+    "type": "object",
+}
+
+main_dish = {
+    "name": "roasted duck with vegetables",
+    "type": "object",
+}
+
+# Define objects in the living room
+living_room = {
+    "name": "living room",
+    "type": "room",
+}
+
+final_door = {
+    "name": "a massive door at the end of the living room",
+    "type": "door",
+}
+
+living_room_note = {
+    "name": "letter",
+    "type": "clueliving_room",
+    "target": final_door,
+    "text": (
+        "You look around and see three paintings:\n"
+        "Starry Night\n"
+        "The Last Supper\n"
+        "Girl with the Pearl Earring\n"
+        "Now you read the letter:\n"
+        "These famous artists hid more than beauty in their works. Look closely and you "
+        "will find the numbers that will lead you to freedom."
+    ),
+    "answer": "14",
+}
+
+outside = {
+    "name": "outside",
+    "type": "room",
+}
+
+gameover = {
+    "name": "Game Over",
+    "type": "room",
+}
+
+# Define the object relations between rooms and doors
+object_relations = {
+    "tower_door": [library, tower_door],
+    "library_door": [tower, kitchen_door, dungeon_door,living_room_door,],  # There's three possible doors in the library
+    "living_room_door": [library, final_door],
+    "kitchen_door": [library, cake],  # The door is an object, because it's a trap.
+    "dungeon_door": [library, gameover],
+    "final_door": [living_room, outside],
+    "tower": [bed, tower_window, tower_door],
+    "library": [library_clue, kitchen_door, dungeon_door, living_room_door],
+    "living room": [living_room_note, final_door],
+    "kitchen": [cake, plate_of_fruit, main_dish],
+    "dungeon": [],
+    "outside": [],
+    "gameover": [],
+    "tower_window": [tower_riddle],
+    "library_clue": [library_riddleA, library_riddleB, library_riddleC],
+}
+
+# Define all rooms and all doors
+all_rooms = [tower, library, living_room, kitchen, dungeon, outside]
+
+all_doors = [tower_door, kitchen_door, dungeon_door, living_room_door, final_door]
+
 # This is the initial state
 INIT_GAME_STATE = {
     "current_room": tower, #The game starts in this room
@@ -10,6 +191,7 @@ INIT_GAME_STATE = {
 
 # The game initial state
 game_state = INIT_GAME_STATE.copy()
+
 
 def linebreak():
     """
