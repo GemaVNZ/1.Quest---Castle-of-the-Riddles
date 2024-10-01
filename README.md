@@ -43,5 +43,5 @@ To play the game on your local machine, follow these steps:
 
 That's it! You can now play the game by following the instructions that appear in the terminal.
 
-##Game Sketch
+## Game sketch
 ![game sketch](https://github.com/user-attachments/assets/264904a8-b394-4267-b6f0-ce2fad5f73c6)
